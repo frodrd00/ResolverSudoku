@@ -17,5 +17,43 @@ namespace SudokuSolver
             InitializeComponent();
         }
 
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Console.WriteLine(openFileDialog1.FileName);
+            }
+        }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guardarComoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ayudaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void quienesSomosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //AboutBox1 box = new AboutBox1();
+            //box.ShowDialog();
+        }
     }
 }
