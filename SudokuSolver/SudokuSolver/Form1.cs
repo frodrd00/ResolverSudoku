@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +14,8 @@ namespace SudokuSolver
 {
     public partial class Form1 : Form
     {
+        Image<Gray, Byte> myImageGray;
+
         public Form1()
         {
             InitializeComponent();
@@ -19,9 +23,18 @@ namespace SudokuSolver
 
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                Console.WriteLine(openFileDialog1.FileName);
+                try
+                {
+                    backgroundWorker1.RunWorkerAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 
@@ -54,6 +67,13 @@ namespace SudokuSolver
         {
             //AboutBox1 box = new AboutBox1();
             //box.ShowDialog();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Bitmap bm = new Bitmap(openFileDialog1.FileName);
+            myImageGray = new Image<Gray, Byte>(bm);
+            imageBox.Image = myImageGray;
         }
     }
 }
