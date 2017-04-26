@@ -17,5 +17,9 @@ namespace SudokuSolver
             InitializeComponent();
         }
 
+        private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
