@@ -80,8 +80,8 @@ namespace SudokuSolver
         private void creaCeldas(Image<Gray,byte> image)
         {
             Console.WriteLine("debug");
-            int widthCell = 35;
-            int heightCell = 35;
+            int widthCell = 36;
+            int heightCell = 36;
             Size sizeCell = new Size(widthCell, heightCell);
             Point start = new Point(460, 48);
 
@@ -91,7 +91,6 @@ namespace SudokuSolver
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    //image.ROI = new Rectangle(new Point((j * widthCell), i * heightCell), sizeCell);
                     ImageBox im = new ImageBox();
                     ((System.ComponentModel.ISupportInitialize)(im)).BeginInit();
                     SuspendLayout();
@@ -105,12 +104,6 @@ namespace SudokuSolver
                     im.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                     Controls.Add(im);
                     ((System.ComponentModel.ISupportInitialize)(im)).EndInit();
-                    /*Image<Gray, byte> imagetest = new Image<Gray, byte>(widthCell, heightCell);
-                    imagetest = imageStrech.Copy();
-                    imagetest = findLargestObject(imagetest, 1);
-                    imagetest = center(imagetest, new Point(numberBox.Left + numberBox.Width / 2, numberBox.Top + numberBox.Height / 2));
-                    listImages[i, j] = imagetest;
-                    im.Image = imagetest;*/
                 }
             }
         }
