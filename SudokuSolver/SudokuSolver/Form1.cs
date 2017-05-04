@@ -74,12 +74,12 @@ namespace SudokuSolver
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             Bitmap bm = new Bitmap(openFileDialog1.FileName);
+            Console.WriteLine(openFileDialog1.FileName);
             myImageGray = new Image<Gray, Byte>(bm);
             imageBox.Image = myImageGray;
         }
         private void creaCeldas(Image<Gray,byte> image)
         {
-            Console.WriteLine("debug");
             int widthCell = 36;
             int heightCell = 36;
             Size sizeCell = new Size(widthCell, heightCell);
@@ -110,7 +110,8 @@ namespace SudokuSolver
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            SudokuGrabber sg = new SudokuGrabber();
+            myImageGray = sg.findLargestObject(myImageGray, 0);
         }
 
         private void button2_Click(object sender, EventArgs e)
