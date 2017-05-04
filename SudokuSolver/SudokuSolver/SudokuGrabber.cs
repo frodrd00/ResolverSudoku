@@ -9,6 +9,13 @@ namespace SudokuSolver
     {
         Rectangle numberBox = new Rectangle();
 
+        public Image<Gray, byte> applyFilters(Image<Gray, byte> image)
+        {
+            image = image.SmoothGaussian(5, 5, 1, 1);
+            image = image.ThresholdAdaptive(new Gray(255), AdaptiveThresholdType.GaussianC, ThresholdType.BinaryInv, 5, new Gray(2));
+            return image;
+        }
+
         public Image<Gray, byte> findLargestObject(Image<Gray, byte> image, int value)
         {
             //if value == 0, means we want to find the frame
