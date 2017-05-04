@@ -111,7 +111,15 @@ namespace SudokuSolver
         private void button1_Click(object sender, EventArgs e)
         {
             SudokuGrabber sg = new SudokuGrabber();
+            myImageGray = sg.applyFilters(myImageGray);
             myImageGray = sg.findLargestObject(myImageGray, 0);
+            Point[] arrayCorner = new Point[4];
+
+            //tenemos que hacer una funcion que encuentre las esquinas
+            
+
+
+            imageBox.Image = myImageGray;
         }
 
         private void button2_Click(object sender, EventArgs e)
