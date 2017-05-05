@@ -16,6 +16,7 @@ namespace SudokuSolver
     public partial class Form1 : Form
     {
         Image<Gray, Byte> myImageGray;
+        Image<Gray, Byte> myImageBlackWhite;
 
         public Form1()
         {
@@ -113,11 +114,14 @@ namespace SudokuSolver
             //
             SudokuGrabber sg = new SudokuGrabber();
             myImageGray = sg.applyFilters(myImageGray);
+            myImageBlackWhite = myImageGray.Copy();
             myImageGray = sg.findLargestObject(myImageGray, 0);
             PointF[] arrayCorner = new PointF[4];
      
             //tenemos que hacer una funcion que encuentre las esquinas
             arrayCorner = sg.findCorners(myImageGray);
+
+            myImageGray = sg.stretchImage(myImageGray,myImageBlackWhite,arrayCorner);
 
             imageBox.Image = myImageGray;
         }

@@ -151,5 +151,24 @@ namespace SudokuSolver
             }
             return arrayCorner;
         }
+
+        public Image<Gray, byte> stretchImage(Image<Gray, byte> image, Image<Gray, byte> imageBlackWhite, PointF[] srcs)
+        {
+            PointF[] dsts = new PointF[4];
+            dsts[0] = new PointF(0, 0);
+            dsts[1] = new PointF(image.Height, 0);
+            dsts[2] = new PointF(0, image.Width);
+            dsts[3] = new PointF(image.Height, image.Width);
+
+            image = imageBlackWhite.Copy();
+
+            Mat mask = null;
+            mask = CvInvoke.GetPerspectiveTransform(srcs, dsts);
+            CvInvoke.WarpPerspective(imageBlackWhite, image, mask, image.Size);//,Inter.Linear, Warp.Default, BorderType.Constant, new MCvScalar(0));
+            image = image.ThresholdBinary(new Gray(70), new Gray(255));
+
+            return image;
+        }
+
     }
 }
