@@ -31,7 +31,7 @@ namespace SudokuSolver
             {
                 for (var x = 0; x < image.Width; x++)
                 {
-                    if (image[y, x].Intensity == 255)
+                    if (image[y, x].Intensity == 255)//we are looking for black pixel because we are looking for the frame
                     {
                         //perform the floodfill on the pixel
                         area = CvInvoke.FloodFill(image, null, new Point(x, y), new MCvScalar(64),
@@ -85,6 +85,71 @@ namespace SudokuSolver
                 numberBox = boundingbox;
             }
             return image;
+        }
+
+        public PointF[] findCorners(Image<Gray, byte> image)
+        {
+            double smallestDistance00 = 0;
+            double smallestDistance10 = 0;
+            double smallestDistance01 = 0;
+            double smallestDistance11 = 0;
+            PointF[] arrayCorner = new PointF[4];
+
+            for (var y = 0; y < image.Height; y++)
+            {
+                for (var x = 0; x < image.Width; x++)
+                {
+                    if (image[y, x].Intensity == 255)
+                    {
+                        double distance00 = Math.Sqrt(Math.Pow(y, 2) + Math.Pow(x, 2));
+                        double distance10 = Math.Sqrt(Math.Pow(y, 2) + Math.Pow(image.Width - x, 2));
+                        double distance01 = Math.Sqrt(Math.Pow(image.Height - y, 2) + Math.Pow(x, 2));
+                        double distance11 = Math.Sqrt(Math.Pow(image.Height - y, 2) + Math.Pow(image.Width - x, 2));
+
+                        if (smallestDistance00 == 0)
+                        {
+                            smallestDistance00 = distance00;
+                        }
+                        else if (smallestDistance00 > distance00)
+                        {
+                            smallestDistance00 = distance00;
+                            arrayCorner[0] = new Point(x, y);
+                        }
+
+                        if (smallestDistance10 == 0)
+                        {
+                            smallestDistance10 = distance10;
+                        }
+                        else if (smallestDistance10 > distance10)
+                        {
+                            smallestDistance10 = distance10;
+                            arrayCorner[1] = new Point(x, y);
+                        }
+
+                        if (smallestDistance01 == 0)
+                        {
+                            smallestDistance01 = distance01;
+                        }
+                        else if (smallestDistance01 > distance01)
+                        {
+                            smallestDistance01 = distance01;
+                            arrayCorner[2] = new Point(x, y);
+                        }
+
+                        if (smallestDistance11 == 0)
+                        {
+                            smallestDistance11 = distance11;
+                        }
+                        else if (smallestDistance11 > distance11)
+                        {
+                            smallestDistance11 = distance11;
+                            arrayCorner[3] = new Point(x, y);
+                        }
+
+                    }
+                }
+            }
+            return arrayCorner;
         }
     }
 }
