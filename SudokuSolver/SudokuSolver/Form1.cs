@@ -17,10 +17,10 @@ namespace SudokuSolver
     {
         Image<Gray, Byte> myImageGray;
         Image<Gray, Byte> myImageBlackWhite;
+        Image<Gray, Byte> original;
         ImageBox ibNumber;
         int widthCell = 36;
         int heightCell = 36;
-        Form2 f2 = new Form2();
 
         public Form1()
         {
@@ -82,6 +82,7 @@ namespace SudokuSolver
             Console.WriteLine(openFileDialog1.FileName);
             myImageGray = new Image<Gray, Byte>(bm);
             imageBox.Image = myImageGray;
+            original = myImageGray.Copy();
         }
         private void creaCeldas(Image<Gray,byte> image)
         {
@@ -116,6 +117,10 @@ namespace SudokuSolver
             Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
             Size sizeCell = new Size(widthCell, heightCell);
             //
+
+            lbCargando.Visible = true;
+            progressBar1.Visible = true;
+
             SudokuGrabber sg = new SudokuGrabber();
             myImageGray = sg.applyFilters(myImageGray);
             myImageBlackWhite = myImageGray.Copy();
@@ -127,21 +132,19 @@ namespace SudokuSolver
 
             myImageGray = sg.stretchImage(myImageGray,myImageBlackWhite,arrayCorner);
 
-            imageBox.Image = myImageGray;
-
-            
-            f2.Show();
+          //  imageBox.Image = original;
 
             int widthImageNumber = myImageGray.Width / 9;
             int heightImageNumber = myImageGray.Height / 9;
             Size sizeCellNumber = new Size(widthImageNumber, heightImageNumber);
 
+            
             //dividir la imagen
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    f2.addOneProgressBar();
+                    progressBar1.Increment(1);
                     myImageGray.ROI = new Rectangle(new Point((j * widthImageNumber), i * heightImageNumber), sizeCellNumber);
                     Image<Gray, byte> imagetest = new Image<Gray, byte>(widthImageNumber, heightImageNumber);
                     imagetest = myImageGray.Copy();
@@ -152,6 +155,9 @@ namespace SudokuSolver
                     ib.Image = imagetest;
                 }
             }
+            
+            progressBar1.Visible = false;
+            lbCargando.Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
