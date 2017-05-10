@@ -8,7 +8,9 @@ namespace SudokuSolver
 {
     class SudokuGrabber
     {
-        Rectangle numberBox = new Rectangle();
+        private Rectangle numberBox = new Rectangle();
+
+        public Rectangle NumberBox { get => numberBox; set => numberBox = value; }
 
         public Image<Gray, byte> applyFilters(Image<Gray, byte> image)
         {
@@ -82,7 +84,7 @@ namespace SudokuSolver
                             out boundingbox,
                             new MCvScalar(0),
                             new MCvScalar(0));
-                numberBox = boundingbox;
+                NumberBox = boundingbox;
             }
             return image;
         }
@@ -170,5 +172,25 @@ namespace SudokuSolver
             return image;
         }
 
+        //Mueve la imagen al centro
+        public Image<Gray, byte> center(Image<Gray, byte> image, Point cog)
+        {
+            Point LUc = new Point(0, 0);
+            Point RUc = new Point(image.Width - 1, 0);
+            Point LBc = new Point(0, image.Height - 1);
+            Point RBc = new Point(image.Width - 1, image.Height - 1);
+            Point cc = new Point(-image.Width / 2, -image.Height / 2);
+            PointF[] dst = { LUc, RUc, LBc, RBc };
+            cog.Offset(cc);
+            LUc.Offset(cog);
+            RUc.Offset(cog);
+            LBc.Offset(cog);
+            RBc.Offset(cog);
+            PointF[] src = { LUc, RUc, LBc, RBc };
+
+            Image<Gray, byte> imgpersp = new Image<Gray, byte>(image.Size);
+            CvInvoke.WarpPerspective(image, imgpersp, CvInvoke.GetPerspectiveTransform(src, dst), image.Size);
+            return imgpersp;
+        }
     }
 }

@@ -17,6 +17,10 @@ namespace SudokuSolver
     {
         Image<Gray, Byte> myImageGray;
         Image<Gray, Byte> myImageBlackWhite;
+        ImageBox ibNumber;
+        int widthCell = 36;
+        int heightCell = 36;
+        Form2 f2 = new Form2();
 
         public Form1()
         {
@@ -81,8 +85,6 @@ namespace SudokuSolver
         }
         private void creaCeldas(Image<Gray,byte> image)
         {
-            int widthCell = 36;
-            int heightCell = 36;
             Size sizeCell = new Size(widthCell, heightCell);
             Point start = new Point(460, 48);
 
@@ -92,25 +94,27 @@ namespace SudokuSolver
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    ImageBox im = new ImageBox();
-                    ((System.ComponentModel.ISupportInitialize)(im)).BeginInit();
+                    ibNumber = new ImageBox();
+                    ((System.ComponentModel.ISupportInitialize)(ibNumber)).BeginInit();
                     SuspendLayout();
-                    im.Location = new Point(start.X + j * (widthCell + margin), start.Y + i * (heightCell + margin));
-                    im.Name = "imageBox" + i + j;
-                    im.Size = sizeCell;
-                    im.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                    im.TabIndex = 2;
-                    im.TabStop = false;
-                    im.Enabled = false;
-                    im.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                    Controls.Add(im);
-                    ((System.ComponentModel.ISupportInitialize)(im)).EndInit();
+                    ibNumber.Location = new Point(start.X + j * (widthCell + margin), start.Y + i * (heightCell + margin));
+                    ibNumber.Name = "imageBox" + i + j;
+                    ibNumber.Size = sizeCell;
+                    ibNumber.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                    ibNumber.TabIndex = 2;
+                    ibNumber.TabStop = false;
+                    ibNumber.Enabled = false;
+                    ibNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                    Controls.Add(ibNumber);
+                    ((System.ComponentModel.ISupportInitialize)(ibNumber)).EndInit();
                 }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
+            Size sizeCell = new Size(widthCell, heightCell);
             //
             SudokuGrabber sg = new SudokuGrabber();
             myImageGray = sg.applyFilters(myImageGray);
@@ -124,6 +128,26 @@ namespace SudokuSolver
             myImageGray = sg.stretchImage(myImageGray,myImageBlackWhite,arrayCorner);
 
             imageBox.Image = myImageGray;
+
+            
+            f2.Show();
+
+            //dividir la imagen
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    f2.addOneProgressBar();
+                    myImageGray.ROI = new Rectangle(new Point((j * widthCell), i * heightCell), sizeCell);
+                    Image<Gray, byte> imagetest = new Image<Gray, byte>(widthCell, heightCell);
+                    imagetest = myImageGray.Copy();
+                    imagetest = sg.findLargestObject(imagetest, 1);
+                    imagetest = sg.center(imagetest, new Point(sg.NumberBox.Left + sg.NumberBox.Width / 2, sg.NumberBox.Top + sg.NumberBox.Height / 2));
+                    listImages[i, j] = imagetest;
+                    ImageBox ib = this.Controls.Find("imageBox" + i.ToString() + j.ToString(), true).FirstOrDefault() as ImageBox;
+                    ib.Image = imagetest;
+                }
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
