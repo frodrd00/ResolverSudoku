@@ -132,14 +132,18 @@ namespace SudokuSolver
             
             f2.Show();
 
+            int widthImageNumber = myImageGray.Width / 9;
+            int heightImageNumber = myImageGray.Height / 9;
+            Size sizeCellNumber = new Size(widthImageNumber, heightImageNumber);
+
             //dividir la imagen
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
                     f2.addOneProgressBar();
-                    myImageGray.ROI = new Rectangle(new Point((j * widthCell), i * heightCell), sizeCell);
-                    Image<Gray, byte> imagetest = new Image<Gray, byte>(widthCell, heightCell);
+                    myImageGray.ROI = new Rectangle(new Point((j * widthImageNumber), i * heightImageNumber), sizeCellNumber);
+                    Image<Gray, byte> imagetest = new Image<Gray, byte>(widthImageNumber, heightImageNumber);
                     imagetest = myImageGray.Copy();
                     imagetest = sg.findLargestObject(imagetest, 1);
                     imagetest = sg.center(imagetest, new Point(sg.NumberBox.Left + sg.NumberBox.Width / 2, sg.NumberBox.Top + sg.NumberBox.Height / 2));
