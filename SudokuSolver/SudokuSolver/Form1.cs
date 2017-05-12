@@ -18,6 +18,8 @@ namespace SudokuSolver
         Image<Gray, Byte> myImageGray;
         Image<Gray, Byte> myImageBlackWhite;
         Image<Gray, Byte> original;
+        Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
+        int[,] sudokuMatrix = new int[9,9];
         ImageBox ibNumber;
         int widthCell = 36;
         int heightCell = 36;
@@ -114,11 +116,9 @@ namespace SudokuSolver
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
+            
             Size sizeCell = new Size(widthCell, heightCell);
-            //
-
-            lbCargando.Visible = true;
+           
             progressBar1.Visible = true;
 
             SudokuGrabber sg = new SudokuGrabber();
@@ -157,12 +157,21 @@ namespace SudokuSolver
             }
             
             progressBar1.Visible = false;
-            lbCargando.Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            NumberFinder nf = new NumberFinder(listImages);
+            sudokuMatrix =  nf.getNumbers();
 
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                   System.Diagnostics.Debug.Write(sudokuMatrix[i,j]);
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
         }
     }
 }
