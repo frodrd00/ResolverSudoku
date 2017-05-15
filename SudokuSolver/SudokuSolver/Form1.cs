@@ -23,6 +23,7 @@ namespace SudokuSolver
         ImageBox ibNumber;
         int widthCell = 36;
         int heightCell = 36;
+        String puzzle = "";
 
         public Form1()
         {
@@ -162,15 +163,46 @@ namespace SudokuSolver
         private void button2_Click(object sender, EventArgs e)
         {
             NumberFinder nf = new NumberFinder(listImages);
-            sudokuMatrix =  nf.getNumbers();
+            sudokuMatrix = nf.getNumbers();
 
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
-                   System.Diagnostics.Debug.Write(sudokuMatrix[i,j]);
+                    puzzle = puzzle + sudokuMatrix[i, j];
                 }
-                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            csSudokuBruteForce sudokusolver = new csSudokuBruteForce();
+            int[] solution = sudokusolver.BruteForce(puzzle);
+            int[,] solutionMatrix = new int[9, 9];
+
+            // BlockCopy uses byte lengths: a double is 8 bytes
+            Buffer.BlockCopy(solution, 0, solutionMatrix, 0, solution.Length * sizeof(int)); //cambiamos el vector a matriz
+
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (sudokuMatrix[i, j] == 0) //si es 0 tenemos que cambiar la imagen
+                    {
+                        int numero = solutionMatrix[i, j]; //tenemos que poner en ese cuadrado la imagen de este numero
+                        int auxi = 0, auxj = 0;
+                        for (int h = 0; h < 9; h++)
+                        {
+                            for (int k = 0; k < 9; k++)
+                            {
+                                if (sudokuMatrix[h, k] == numero)
+                                {
+                                    auxi = h;
+                                    auxj = k;
+                                }
+                            }
+                        }
+                        ImageBox ib = this.Controls.Find("imageBox" + i.ToString() + j.ToString(), true).FirstOrDefault() as ImageBox;
+                        ib.Image = listImages[auxi, auxj];
+                    }
+                }
             }
         }
     }

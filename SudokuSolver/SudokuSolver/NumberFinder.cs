@@ -14,7 +14,6 @@ namespace SudokuSolver
 
     class NumberFinder
     {
-        KNearest knn = new KNearest();
         int K = 10;
         int MAX_NUM_IMAGES = 60000;
         Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];

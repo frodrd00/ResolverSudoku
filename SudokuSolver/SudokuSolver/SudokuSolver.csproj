@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NumberFinder.cs" />
+    <Compile Include="csSudokuBruteForce.cs" />
     <Compile Include="SudokuGrabber.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
