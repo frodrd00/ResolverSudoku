@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,6 +35,7 @@ namespace SudokuSolver
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            openFileDialog1.FileName = "";
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -50,17 +52,14 @@ namespace SudokuSolver
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SudokusDB sdb = new SudokusDB();
+            sdb.ShowDialog();
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void guardarComoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            SaveSudoku ss = new SaveSudoku();
+            ss.ShowDialog();
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
