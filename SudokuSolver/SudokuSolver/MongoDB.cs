@@ -18,19 +18,50 @@ namespace SudokuSolver
 
         }
 
+        //nos devuelve una lista con todos los sudokus de la base de datos
         public List<BsonDocument> getCollection()
         {
-            var collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("usuarios").AsQueryable().ToList();
+            var collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("sudokus.files").AsQueryable().ToList();
 
             return collection;
         }
 
-        public void saveSudoku(BsonDocument document)
-        {
-            var collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("usuarios");
+        public IMongoDatabase getDatabase() {
 
-            collection.InsertOne(document);
+            var db = mc.GetDatabase("sudokudb");
+
+            return db;
+
         }
+
+        //nos devuelve la id del sudoku seleccionado
+        public BsonValue getID(string file) {
+
+            var collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("sudokus.files").AsQueryable().ToList();
+
+            BsonValue id = "";
+
+            foreach (var document in collection)
+            {
+                id = document.GetElement(0).Value;
+                break;
+            }
+
+            return id;
+
+        }
+
+        public void deleteSudoku(BsonValue id) {
+
+            var collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("sudokus.files");
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            collection.DeleteMany(filter);
+
+            collection = mc.GetDatabase("sudokudb").GetCollection<BsonDocument>("sudokus.chunks");
+            filter = Builders<BsonDocument>.Filter.Eq("files_id", id);
+            collection.DeleteMany(filter);
+        }
+
 
     }
 }

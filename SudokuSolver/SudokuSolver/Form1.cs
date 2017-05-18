@@ -16,15 +16,15 @@ namespace SudokuSolver
 {
     public partial class Form1 : Form
     {
-        Image<Gray, Byte> myImageGray;
-        Image<Gray, Byte> myImageBlackWhite;
-        Image<Gray, Byte> original;
-        Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
-        int[,] sudokuMatrix = new int[9,9];
-        ImageBox ibNumber;
-        int widthCell = 36;
-        int heightCell = 36;
-        String puzzle = "";
+        public Image<Gray, Byte> myImageGray;
+        public Image<Gray, Byte> myImageBlackWhite;
+        public Image<Gray, Byte> original;
+        private Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
+        private int[,] sudokuMatrix = new int[9,9];
+        private ImageBox ibNumber;
+        private int widthCell = 36;
+        private int heightCell = 36;
+        private String puzzle = "";
 
         public Form1()
         {
@@ -52,13 +52,13 @@ namespace SudokuSolver
 
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SudokusDB sdb = new SudokusDB();
+            SudokusDB sdb = new SudokusDB(this);
             sdb.ShowDialog();
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveSudoku ss = new SaveSudoku();
+            SaveSudoku ss = new SaveSudoku(openFileDialog1.FileName);
             ss.ShowDialog();
         }
 
@@ -81,7 +81,7 @@ namespace SudokuSolver
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             Bitmap bm = new Bitmap(openFileDialog1.FileName);
-            Console.WriteLine(openFileDialog1.FileName);
+            System.Diagnostics.Debug.WriteLine(openFileDialog1.FileName);
             myImageGray = new Image<Gray, Byte>(bm);
             imageBox.Image = myImageGray;
             original = myImageGray.Copy();

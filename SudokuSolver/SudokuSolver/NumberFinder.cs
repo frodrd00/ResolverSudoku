@@ -14,8 +14,8 @@ namespace SudokuSolver
 
     class NumberFinder
     {
-        int K = 10;
-        int MAX_NUM_IMAGES = 60000;
+        //int K = 10;
+        //int MAX_NUM_IMAGES = 60000;
         Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
         int[,] sudokuMatrix = new int[9, 9];
 
