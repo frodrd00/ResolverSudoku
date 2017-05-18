@@ -62,9 +62,12 @@ namespace SudokuSolver
                 listSudokus.Items.Remove(listSudokus.SelectedItem);
                 listSudokus.Refresh();
 
-                MessageBox.Show("Sudoku borrado","Aviso");
+                MessageBox.Show("El sudoku ha sido borrado", "Aviso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
+            buttonAbrir.Enabled = false;
+            buttonBorrar.Enabled = false;
 
         }
 

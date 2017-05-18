@@ -41,9 +41,8 @@
             this.imageBox = new Emgu.CV.UI.ImageBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonAnalizar = new System.Windows.Forms.Button();
+            this.buttonResolver = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
@@ -74,14 +73,14 @@
             // nuevoToolStripMenuItem
             // 
             this.nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
-            this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nuevoToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.nuevoToolStripMenuItem.Text = "Nuevo";
             this.nuevoToolStripMenuItem.Click += new System.EventHandler(this.nuevoToolStripMenuItem_Click);
             // 
             // abrirToolStripMenuItem
             // 
             this.abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
-            this.abrirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.abrirToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.abrirToolStripMenuItem.Text = "Abrir";
             this.abrirToolStripMenuItem.Click += new System.EventHandler(this.abrirToolStripMenuItem_Click);
             // 
@@ -89,14 +88,14 @@
             // 
             this.guardarToolStripMenuItem.Enabled = false;
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.guardarToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.guardarToolStripMenuItem.Text = "Guardar";
             this.guardarToolStripMenuItem.Click += new System.EventHandler(this.guardarToolStripMenuItem_Click);
             // 
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -139,35 +138,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // backgroundWorker1
+            // buttonAnalizar
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.buttonAnalizar.Enabled = false;
+            this.buttonAnalizar.Location = new System.Drawing.Point(170, 465);
+            this.buttonAnalizar.Name = "buttonAnalizar";
+            this.buttonAnalizar.Size = new System.Drawing.Size(107, 31);
+            this.buttonAnalizar.TabIndex = 3;
+            this.buttonAnalizar.Text = "Analizar Imagen";
+            this.buttonAnalizar.UseVisualStyleBackColor = true;
+            this.buttonAnalizar.Click += new System.EventHandler(this.buttonAnalizar_Click);
             // 
-            // button1
+            // buttonResolver
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(170, 465);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 31);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Analizar Imagen";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(603, 465);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(82, 31);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Resolver";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonResolver.Enabled = false;
+            this.buttonResolver.Location = new System.Drawing.Point(611, 465);
+            this.buttonResolver.Name = "buttonResolver";
+            this.buttonResolver.Size = new System.Drawing.Size(82, 31);
+            this.buttonResolver.TabIndex = 4;
+            this.buttonResolver.Text = "Resolver";
+            this.buttonResolver.UseVisualStyleBackColor = true;
+            this.buttonResolver.Click += new System.EventHandler(this.buttonResolver_Click);
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(330, 473);
+            this.progressBar1.Location = new System.Drawing.Point(329, 473);
             this.progressBar1.Maximum = 81;
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(234, 23);
@@ -181,13 +176,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 536);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonResolver);
+            this.Controls.Add(this.buttonAnalizar);
             this.Controls.Add(this.imageBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Sudoku Solver";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
@@ -209,9 +205,8 @@
         public Emgu.CV.UI.ImageBox imageBox;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonAnalizar;
+        private System.Windows.Forms.Button buttonResolver;
         private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

@@ -58,6 +58,7 @@
             this.nombreSudoku.Name = "nombreSudoku";
             this.nombreSudoku.Size = new System.Drawing.Size(133, 20);
             this.nombreSudoku.TabIndex = 2;
+            this.nombreSudoku.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_enter);
             // 
             // SaveSudoku
             // 

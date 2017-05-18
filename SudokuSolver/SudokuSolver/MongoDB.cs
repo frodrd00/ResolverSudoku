@@ -43,8 +43,14 @@ namespace SudokuSolver
 
             foreach (var document in collection)
             {
-                id = document.GetElement(0).Value;
-                break;
+                BsonValue bd = document.GetElement(5).Value;
+
+                if (bd == file)
+                {
+                    id = document.GetElement(0).Value;
+                    break;
+                }
+                
             }
 
             return id;

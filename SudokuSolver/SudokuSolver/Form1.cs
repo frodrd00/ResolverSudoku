@@ -34,14 +34,21 @@ namespace SudokuSolver
 
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+            openFileDialog1.Filter = "Image Files(*.png; *.jpg; *.jpeg; *.gif; *.bmp)|*.png; *.jpg; *.jpeg; *.gif; *.bmp";
             openFileDialog1.FileName = "";
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
                 try
                 {
-                    backgroundWorker1.RunWorkerAsync();
+                    Bitmap bm = new Bitmap(openFileDialog1.FileName);
+                    System.Diagnostics.Debug.WriteLine(openFileDialog1.FileName);
+                    myImageGray = new Image<Gray, Byte>(bm);
+                    imageBox.Image = myImageGray;
+                    original = myImageGray.Copy();
+
+                    guardarToolStripMenuItem.Enabled = true;
+                    buttonAnalizar.Enabled = true;
                 }
                 catch (Exception)
                 {
@@ -54,6 +61,8 @@ namespace SudokuSolver
         {
             SudokusDB sdb = new SudokusDB(this);
             sdb.ShowDialog();
+
+            buttonAnalizar.Enabled = true;
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -64,7 +73,13 @@ namespace SudokuSolver
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("¿Estas seguro de salir?",
+                  "Aviso",
+                  MessageBoxButtons.YesNo,
+                  MessageBoxIcon.Warning);
 
+            if (result == DialogResult.Yes)
+                Close();
         }
 
         private void ayudaToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -78,14 +93,6 @@ namespace SudokuSolver
             //box.ShowDialog();
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Bitmap bm = new Bitmap(openFileDialog1.FileName);
-            System.Diagnostics.Debug.WriteLine(openFileDialog1.FileName);
-            myImageGray = new Image<Gray, Byte>(bm);
-            imageBox.Image = myImageGray;
-            original = myImageGray.Copy();
-        }
         private void creaCeldas(Image<Gray,byte> image)
         {
             Size sizeCell = new Size(widthCell, heightCell);
@@ -114,9 +121,10 @@ namespace SudokuSolver
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonAnalizar_Click(object sender, EventArgs e)
         {
-            
+            buttonAnalizar.Enabled = false;
+            guardarToolStripMenuItem.Enabled = false;
             Size sizeCell = new Size(widthCell, heightCell);
            
             progressBar1.Visible = true;
@@ -157,10 +165,16 @@ namespace SudokuSolver
             }
             
             progressBar1.Visible = false;
+            buttonResolver.Enabled = true;
+            guardarToolStripMenuItem.Enabled = true;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonResolver_Click(object sender, EventArgs e)
         {
+            buttonResolver.Enabled = false;
+            buttonAnalizar.Enabled = false;
+            guardarToolStripMenuItem.Enabled = false;
+
             NumberFinder nf = new NumberFinder(listImages);
             sudokuMatrix = nf.getNumbers();
 
@@ -202,6 +216,22 @@ namespace SudokuSolver
                         ib.Image = listImages[auxi, auxj];
                     }
                 }
+            }
+
+            guardarToolStripMenuItem.Enabled = true;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show("¿Estas seguro de salir?",
+                "Aviso",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }

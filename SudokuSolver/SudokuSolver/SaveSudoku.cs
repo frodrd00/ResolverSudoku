@@ -13,6 +13,7 @@ namespace SudokuSolver
         public SaveSudoku(string path)
         {
             InitializeComponent();
+            nombreSudoku.Select();
             this.path = path;
         }
 
@@ -37,7 +38,6 @@ namespace SudokuSolver
 
                 gridfs(mongo, filename);
             }
-
             else
             {
                 DialogResult result = MessageBox.Show("Ya existe un sudoku con ese nombre," +
@@ -70,8 +70,19 @@ namespace SudokuSolver
             //guardamos los bytes en la base de datos
             var id = bucket.UploadFromBytes(filename, source);
 
-            MessageBox.Show("El sudoku ha sido guardado", "Aviso");
+            MessageBox.Show("El sudoku ha sido guardado", "Aviso", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             Close();
+        }
+
+        private void key_enter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                String filename = nombreSudoku.Text;
+                this.saveFile(filename);
+            }
         }
     }
 }
