@@ -87,6 +87,7 @@
             // 
             // guardarToolStripMenuItem
             // 
+            this.guardarToolStripMenuItem.Enabled = false;
             this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
             this.guardarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.guardarToolStripMenuItem.Text = "Guardar";
@@ -144,6 +145,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(170, 465);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 31);
@@ -154,6 +156,7 @@
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(603, 465);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(82, 31);
