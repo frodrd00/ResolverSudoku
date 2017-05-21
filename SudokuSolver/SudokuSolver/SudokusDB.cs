@@ -102,5 +102,13 @@ namespace SudokuSolver
             //cerramos ventana lista imagenes
             Close();
         }
+
+        private void listSudokus_DoubleClick(object sender, EventArgs e)
+        {
+            if (listSudokus != null)
+            {
+                buttonAbrir_Click(sender,e);
+            }
+        }
     }
 }

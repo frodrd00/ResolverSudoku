@@ -43,6 +43,7 @@
             this.listSudokus.Size = new System.Drawing.Size(200, 199);
             this.listSudokus.TabIndex = 0;
             this.listSudokus.SelectedIndexChanged += new System.EventHandler(this.listSudokus_SelectedIndexChanged);
+            this.listSudokus.DoubleClick += new System.EventHandler(this.listSudokus_DoubleClick);
             // 
             // buttonBorrar
             // 

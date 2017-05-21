@@ -84,13 +84,21 @@ namespace SudokuSolver
 
         private void ayudaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            String msg = string.Format("Esta aplicación permite analizar una imagen que contenga un sudoku para extraer los números y posteriormente resolver el sudoku.{0} " +
+                "{0}Para comenzar puede subir una imagen directamente desde su ordenador mediante el botón nuevo, en la barra superior, o abrir un sudoku guardado en la base de datos mediante el botón abrir{0} " +
+                "{0}Mediante el botón analizar, la aplicación buscará en la imagen los números del sudoku.{0} " +
+                "{0}Mediante el boton resolver cada casilla vacia se rellenará del número correspondiente, es decir, se resolverá el sudoku.{0} " +
+                "{0} {0}" +
+                "{0}Nota: La aplicación solo acepta imagenes los siguientes formatos: .png  .jpg  .jpeg  .gif .bmp {0}", Environment.NewLine);
+            MessageBox.Show(this, msg, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void quienesSomosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //AboutBox1 box = new AboutBox1();
-            //box.ShowDialog();
+            String msg = string.Format("Aplicación realizada por:{0} " +
+                "{0}Flavio Rodrigues Dias {0}" +
+                "{0}Mario Llamas Lanza{0}", Environment.NewLine);
+            MessageBox.Show(this, msg, "Sobre nosotros", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void creaCeldas(Image<Gray,byte> image)
@@ -192,11 +200,14 @@ namespace SudokuSolver
 
             // BlockCopy uses byte lengths: a double is 8 bytes
             Buffer.BlockCopy(solution, 0, solutionMatrix, 0, solution.Length * sizeof(int)); //cambiamos el vector a matriz
+            progressBar1.Value = 0;
+            progressBar1.Visible = true;
 
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
                 {
+                    progressBar1.Increment(1);
                     if (sudokuMatrix[i, j] == 0) //si es 0 tenemos que cambiar la imagen
                     {
                         int numero = solutionMatrix[i, j]; //tenemos que poner en ese cuadrado la imagen de este numero
@@ -217,7 +228,7 @@ namespace SudokuSolver
                     }
                 }
             }
-
+            progressBar1.Visible = false;
             guardarToolStripMenuItem.Enabled = true;
         }
 
