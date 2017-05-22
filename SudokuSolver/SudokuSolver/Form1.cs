@@ -25,7 +25,7 @@ namespace SudokuSolver
         private int widthCell = 36;
         private int heightCell = 36;
         private String puzzle = "";
-
+        private bool salir = false;
         public Form1()
         {
             InitializeComponent();
@@ -61,8 +61,6 @@ namespace SudokuSolver
         {
             SudokusDB sdb = new SudokusDB(this);
             sdb.ShowDialog();
-
-            buttonAnalizar.Enabled = true;
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -79,7 +77,11 @@ namespace SudokuSolver
                   MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
+            {
+                salir = true;
                 Close();
+            }
+               
         }
 
         private void ayudaToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -234,16 +236,20 @@ namespace SudokuSolver
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            DialogResult result = MessageBox.Show("¿Estas seguro de salir?",
-                "Aviso",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-
-            if (result == DialogResult.No)
+            if (!salir)
             {
-                e.Cancel = true;
+                DialogResult result = MessageBox.Show("¿Estas seguro de salir?",
+                                       "Aviso",
+                                       MessageBoxButtons.YesNo,
+                                       MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+
             }
+            
         }
     }
 }

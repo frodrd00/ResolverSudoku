@@ -99,6 +99,9 @@ namespace SudokuSolver
             form1.imageBox.Image = form1.myImageGray;
             form1.original = form1.myImageGray.Copy();
 
+            form1.buttonAnalizar.Enabled = true;
+            form1.guardarToolStripMenuItem.Enabled = false;
+
             //cerramos ventana lista imagenes
             Close();
         }

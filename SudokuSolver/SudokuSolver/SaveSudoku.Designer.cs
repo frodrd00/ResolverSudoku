@@ -46,7 +46,7 @@
             // nombre
             // 
             this.nombre.AutoSize = true;
-            this.nombre.Location = new System.Drawing.Point(110, 20);
+            this.nombre.Location = new System.Drawing.Point(106, 25);
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(44, 13);
             this.nombre.TabIndex = 1;
@@ -68,10 +68,12 @@
             this.Controls.Add(this.nombreSudoku);
             this.Controls.Add(this.nombre);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SaveSudoku";
-            this.Text = "SaveSudoku";
+            this.ShowIcon = false;
+            this.Text = "Guardar Sudoku";
             this.ResumeLayout(false);
             this.PerformLayout();
 

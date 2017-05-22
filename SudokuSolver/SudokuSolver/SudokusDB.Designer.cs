@@ -30,7 +30,6 @@
         {
             this.listSudokus = new System.Windows.Forms.ListBox();
             this.buttonBorrar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonAbrir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -38,7 +37,7 @@
             // 
             this.listSudokus.BackColor = System.Drawing.SystemColors.Window;
             this.listSudokus.FormattingEnabled = true;
-            this.listSudokus.Location = new System.Drawing.Point(24, 54);
+            this.listSudokus.Location = new System.Drawing.Point(12, 12);
             this.listSudokus.Name = "listSudokus";
             this.listSudokus.Size = new System.Drawing.Size(200, 199);
             this.listSudokus.TabIndex = 0;
@@ -48,7 +47,7 @@
             // buttonBorrar
             // 
             this.buttonBorrar.Enabled = false;
-            this.buttonBorrar.Location = new System.Drawing.Point(122, 273);
+            this.buttonBorrar.Location = new System.Drawing.Point(110, 226);
             this.buttonBorrar.Name = "buttonBorrar";
             this.buttonBorrar.Size = new System.Drawing.Size(102, 23);
             this.buttonBorrar.TabIndex = 2;
@@ -56,19 +55,10 @@
             this.buttonBorrar.UseVisualStyleBackColor = true;
             this.buttonBorrar.Click += new System.EventHandler(this.buttonBorrar_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Lista de Sudokus";
-            // 
             // buttonAbrir
             // 
             this.buttonAbrir.Enabled = false;
-            this.buttonAbrir.Location = new System.Drawing.Point(24, 273);
+            this.buttonAbrir.Location = new System.Drawing.Point(12, 226);
             this.buttonAbrir.Name = "buttonAbrir";
             this.buttonAbrir.Size = new System.Drawing.Size(92, 23);
             this.buttonAbrir.TabIndex = 4;
@@ -80,15 +70,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(237, 316);
+            this.ClientSize = new System.Drawing.Size(227, 265);
             this.Controls.Add(this.buttonAbrir);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonBorrar);
             this.Controls.Add(this.listSudokus);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SudokusDB";
-            this.Text = "SudokusDB";
+            this.ShowIcon = false;
+            this.Text = "Lista Sudokus";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -96,7 +88,6 @@
 
         private System.Windows.Forms.ListBox listSudokus;
         private System.Windows.Forms.Button buttonBorrar;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonAbrir;
     }
 }
