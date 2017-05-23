@@ -92,7 +92,7 @@ namespace SudokuSolver
                 "{0}Mediante el boton resolver cada casilla vacia se rellenará del número correspondiente, es decir, se resolverá el sudoku.{0} " +
                 "{0} {0}" +
                 "{0}Nota: La aplicación solo acepta imagenes los siguientes formatos: .png  .jpg  .jpeg  .gif .bmp {0}", Environment.NewLine);
-            MessageBox.Show(this, msg, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, msg, "Ayuda", MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
 
         private void quienesSomosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,6 +181,7 @@ namespace SudokuSolver
 
         private void buttonResolver_Click(object sender, EventArgs e)
         {
+            puzzle = "";
             buttonResolver.Enabled = false;
             buttonAnalizar.Enabled = false;
             guardarToolStripMenuItem.Enabled = false;
@@ -192,8 +193,10 @@ namespace SudokuSolver
             {
                 for (int j = 0; j < 9; j++)
                 {
+                    System.Diagnostics.Debug.Write(sudokuMatrix[i,j]+" ");
                     puzzle = puzzle + sudokuMatrix[i, j];
                 }
+                System.Diagnostics.Debug.WriteLine("");
             }
 
             csSudokuBruteForce sudokusolver = new csSudokuBruteForce();

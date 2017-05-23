@@ -68,6 +68,7 @@ namespace SudokuSolver
 
             buttonAbrir.Enabled = false;
             buttonBorrar.Enabled = false;
+            form1.guardarToolStripMenuItem.Enabled = false;
 
         }
 
