@@ -16,15 +16,15 @@ namespace SudokuSolver
 {
     public partial class Form1 : Form
     {
-        public Image<Gray, Byte> myImageGray;
-        public Image<Gray, Byte> myImageBlackWhite;
-        public Image<Gray, Byte> original;
-        private Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9];
-        private int[,] sudokuMatrix = new int[9,9];
-        private ImageBox ibNumber;
+        public Image<Gray, Byte> myImageGray; 
+        public Image<Gray, Byte> myImageBlackWhite; //imagen original en blanco y negro
+        public Image<Gray, Byte> original; //imagen origninal
+        private Image<Gray, byte>[,] listImages = new Image<Gray, byte>[9, 9]; //lista de 81 imagenes (celdas)
+        private int[,] sudokuMatrix = new int[9,9]; //matriz del sudoku sin resolver
+        private ImageBox ibNumber; 
         private int widthCell = 36;
         private int heightCell = 36;
-        private String puzzle = "";
+        private String puzzle = ""; //string donde se almacena el sudoku sin resover seguido
         private bool salir = false;
         public Form1()
         {
@@ -45,7 +45,7 @@ namespace SudokuSolver
                     System.Diagnostics.Debug.WriteLine(openFileDialog1.FileName);
                     myImageGray = new Image<Gray, Byte>(bm);
                     imageBox.Image = myImageGray;
-                    original = myImageGray.Copy();
+                    original = myImageGray.Copy(); //guardamos la imagen original
 
                     guardarToolStripMenuItem.Enabled = true;
                     buttonAnalizar.Enabled = true;
@@ -105,6 +105,7 @@ namespace SudokuSolver
 
         private void creaCeldas(Image<Gray,byte> image)
         {
+            //creamos las 81 celdas vacias
             Size sizeCell = new Size(widthCell, heightCell);
             Point start = new Point(460, 48);
 
@@ -139,16 +140,16 @@ namespace SudokuSolver
            
             progressBar1.Visible = true;
 
-            SudokuGrabber sg = new SudokuGrabber();
-            myImageGray = sg.applyFilters(myImageGray);
+            SudokuGrabber sg = new SudokuGrabber(); //clase con los algoritmos
+            myImageGray = sg.applyFilters(myImageGray); //aplicamos threshold y gausian blur, para cambiar a blanco y negro y reducir ruido respectivamente
             myImageBlackWhite = myImageGray.Copy();
-            myImageGray = sg.findLargestObject(myImageGray, 0);
-            PointF[] arrayCorner = new PointF[4];
+            myImageGray = sg.findLargestObject(myImageGray, 0); //encuentra el elemento mas grande negro
+            PointF[] arrayCorner = new PointF[4]; //array con las 4 esquinas
      
-            //tenemos que hacer una funcion que encuentre las esquinas
-            arrayCorner = sg.findCorners(myImageGray);
+            
+            arrayCorner = sg.findCorners(myImageGray); //encuentra las equinas
 
-            myImageGray = sg.stretchImage(myImageGray,myImageBlackWhite,arrayCorner);
+            myImageGray = sg.stretchImage(myImageGray,myImageBlackWhite,arrayCorner); //ajusta las imagenes al image box
 
           //  imageBox.Image = original;
 
@@ -187,7 +188,7 @@ namespace SudokuSolver
             guardarToolStripMenuItem.Enabled = false;
 
             NumberFinder nf = new NumberFinder(listImages);
-            sudokuMatrix = nf.getNumbers();
+            sudokuMatrix = nf.getNumbers(); //aplica OCR (Optical Character Recognition ) en cada celda
 
             for (int i = 0; i < 9; i++)
             {
@@ -199,7 +200,7 @@ namespace SudokuSolver
                 System.Diagnostics.Debug.WriteLine("");
             }
 
-            csSudokuBruteForce sudokusolver = new csSudokuBruteForce();
+            csSudokuBruteForce sudokusolver = new csSudokuBruteForce(); //aplica fuerza bruta al sudoku
             int[] solution = sudokusolver.BruteForce(puzzle);
             int[,] solutionMatrix = new int[9, 9];
 
@@ -208,6 +209,15 @@ namespace SudokuSolver
             progressBar1.Value = 0;
             progressBar1.Visible = true;
 
+            changeImages( solutionMatrix);
+
+            progressBar1.Visible = false;
+            guardarToolStripMenuItem.Enabled = true;
+
+        }
+
+        private void changeImages(int[,] solutionMatrix)
+        {
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
@@ -233,8 +243,6 @@ namespace SudokuSolver
                     }
                 }
             }
-            progressBar1.Visible = false;
-            guardarToolStripMenuItem.Enabled = true;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

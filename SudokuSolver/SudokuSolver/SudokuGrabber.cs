@@ -8,18 +8,18 @@ namespace SudokuSolver
 {
     class SudokuGrabber
     {
-        private Rectangle numberBox = new Rectangle();
+        private Rectangle numberBox = new Rectangle(); 
 
         public Rectangle NumberBox { get => numberBox; set => numberBox = value; }
 
-        public Image<Gray, byte> applyFilters(Image<Gray, byte> image)
+        public Image<Gray, byte> applyFilters(Image<Gray, byte> image) //aplica threshold y gaussian blur
         {
             image = image.SmoothGaussian(5, 5, 1, 1);
             image = image.ThresholdAdaptive(new Gray(255), AdaptiveThresholdType.GaussianC, ThresholdType.BinaryInv, 5, new Gray(2));
             return image;
         }
 
-        public Image<Gray, byte> findLargestObject(Image<Gray, byte> image, int value)
+        public Image<Gray, byte> findLargestObject(Image<Gray, byte> image, int value) //encuentra area mas grande en negro 
         {
             //if value == 0, means we want to find the frame
             //if value == 1, means we are trying to find the numbers
@@ -89,7 +89,7 @@ namespace SudokuSolver
             return image;
         }
 
-        public PointF[] findCorners(Image<Gray, byte> image)
+        public PointF[] findCorners(Image<Gray, byte> image) //encuentra esquinas
         {
             double smallestDistance00 = 0;
             double smallestDistance10 = 0;
